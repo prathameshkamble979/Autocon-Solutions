@@ -1,7 +1,6 @@
 <div align="center">
 
-<!-- Hero Banner -->
-<img src="docs/assets/hero-banner.png" alt="Autocon Solutions Hero Banner" width="100%">
+
 
 # 🏭 Autocon Solutions
 **Enterprise-Grade Industrial Automation & AI Sales Platform**
