@@ -88,8 +88,7 @@ erDiagram
 
 > **Note:** Add screenshots to the `docs/assets/` directory and uncomment the lines below.
 
-<details>
-<summary>Click to view screenshots</summary>
+
 
 ### Home Page & Hero Section
 <img src="docs/assets/home-page.png" alt="Home Page" width="800">
@@ -107,7 +106,7 @@ erDiagram
 ### Admin Dashboard Login
 <img src="docs/assets/admin-login.png" alt="Admin Login" width="800">
 
-</details>
+
 
 ---
 
