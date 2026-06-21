@@ -1,7 +1,7 @@
 <div align="center">
 
-<!-- Placeholder for Hero Banner -->
-<!-- <img src="docs/assets/hero-banner.png" alt="Autocon Solutions Hero Banner" width="100%"> -->
+<!-- Hero Banner -->
+<img src="docs/assets/hero-banner.png" alt="Autocon Solutions Hero Banner" width="100%">
 
 # 🏭 Autocon Solutions
 **Enterprise-Grade Industrial Automation & AI Sales Platform**
@@ -92,16 +92,20 @@ erDiagram
 <summary>Click to view screenshots</summary>
 
 ### Home Page & Hero Section
-<!-- <img src="docs/assets/home.png" alt="Home Page" width="800"> -->
+<img src="docs/assets/home-page.png" alt="Home Page" width="800">
 
 ### AI Voice Search & Product Catalogue
-<!-- <img src="docs/assets/products.png" alt="Products Page" width="800"> -->
+<img src="docs/assets/products-and-ai-search.png" alt="Products Page" width="800">
+
+### Enterprise Sales Tools
+<img src="docs/assets/enterprise-tool-1.png" alt="Enterprise Sales Tools" width="800">
+<img src="docs/assets/enterprise-tool-2.png" alt="Enterprise Sales Tools" width="800">
 
 ### Project Details & Modal
-<!-- <img src="docs/assets/projects.png" alt="Projects Modal" width="800"> -->
+<img src="docs/assets/projects.png" alt="Projects Modal" width="800">
 
-### Admin Dashboard
-<!-- <img src="docs/assets/dashboard.png" alt="Admin Dashboard" width="800"> -->
+### Admin Dashboard Login
+<img src="docs/assets/admin-login.png" alt="Admin Login" width="800">
 
 </details>
 
