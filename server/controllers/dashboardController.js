@@ -2,6 +2,8 @@ const Booking = require('../models/Booking');
 const Product = require('../models/Product');
 const CaseStudy = require('../models/CaseStudy');
 const Project = require('../models/Project');
+const Quote = require('../models/Quote');
+const Proposal = require('../models/Proposal');
 
 // @desc    Get dashboard stats
 // @route   GET /api/dashboard/stats
@@ -13,6 +15,8 @@ const getDashboardStats = async (req, res) => {
         const totalCaseStudies = await CaseStudy.countDocuments();
         const totalBookings = await Booking.countDocuments();
         const newBookings = await Booking.countDocuments({ status: 'NEW' });
+        const totalQuotes = await Quote.countDocuments();
+        const totalProposals = await Proposal.countDocuments();
 
         // Get recent bookings
         const recentBookings = await Booking.find({})
@@ -30,7 +34,9 @@ const getDashboardStats = async (req, res) => {
                 projects: totalProjects,
                 caseStudies: totalCaseStudies,
                 bookings: totalBookings,
-                newBookings: newBookings
+                newBookings: newBookings,
+                quotes: totalQuotes,
+                proposals: totalProposals
             },
             recentBookings,
             recentMessages

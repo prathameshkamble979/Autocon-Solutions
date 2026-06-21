@@ -62,6 +62,10 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 app.use('/api/case-studies', require('./routes/caseStudyRoutes'));
+app.use('/api/ai/advisor', require('./routes/aiAdvisorRoutes'));
+app.use('/api/ai/search', require('./routes/aiSearchRoutes'));
+app.use('/api/quotes', require('./routes/quoteRoutes'));
+app.use('/api/proposals', require('./routes/proposalRoutes'));
 
 // 404 handler for unknown API routes
 app.use('/api/*', (req, res) => {

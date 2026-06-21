@@ -23,6 +23,10 @@ import Services from './pages/Services';
 import CaseStudies from './pages/CaseStudies';
 import CaseStudyDetails from './pages/CaseStudyDetails';
 import ProjectsPublic from './pages/Projects';
+import AIAdvisorPage from './pages/AIAdvisorPage';
+import QuoteBuilder from './pages/QuoteBuilder';
+import ROICalculator from './pages/ROICalculator';
+import ProposalGenerator from './pages/ProposalGenerator';
 import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import Products from './pages/admin/Products';
@@ -106,6 +110,26 @@ const LayoutWrapper = () => {
             <Route path="/projects/:slug" element={
               <PageTransition>
                 <CaseStudyDetails />
+              </PageTransition>
+            } />
+            <Route path="/advisor" element={
+              <PageTransition>
+                <AIAdvisorPage />
+              </PageTransition>
+            } />
+            <Route path="/quote" element={
+              <PageTransition>
+                <QuoteBuilder />
+              </PageTransition>
+            } />
+            <Route path="/roi" element={
+              <PageTransition>
+                <ROICalculator />
+              </PageTransition>
+            } />
+            <Route path="/proposal" element={
+              <PageTransition>
+                <ProposalGenerator />
               </PageTransition>
             } />
 

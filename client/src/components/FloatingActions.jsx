@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp, MessageCircle, CalendarCheck } from 'lucide-react';
-import BookVisitModal from './BookVisitModal';
+import { ArrowUp, MessageCircle, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { tenant } from '../config';
 
 const FloatingActions = () => {
     const [isVisible,   setIsVisible]   = useState(false);
-    const [isVisitOpen, setIsVisitOpen] = useState(false);
 
     useEffect(() => {
         const fn = () => setIsVisible(window.pageYOffset > 300);
@@ -25,22 +24,23 @@ const FloatingActions = () => {
     const whatsappUrl = getWhatsAppLink(tenant.contact.whatsapp, "Hi, I'm interested in Autocon Solutions conveyor systems. Please share more details.");
 
     return (
-        <>
-            <BookVisitModal isOpen={isVisitOpen} onClose={() => setIsVisitOpen(false)} />
-
             <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
-                {/* Book a Visit */}
-                <motion.button
-                    onClick={() => setIsVisitOpen(true)}
+                {/* AI Search */}
+                <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.08 }}
-                    className="bg-slate-900 text-amber-400 border border-amber-500/40 px-4 py-3 rounded-full shadow-lg hover:bg-amber-500 hover:text-slate-900 hover:border-amber-500 transition-all flex items-center gap-2 text-sm font-bold"
-                    title="Schedule a Visit"
                 >
-                    <CalendarCheck size={18} />
-                    <span className="hidden sm:inline">Book a Visit</span>
-                </motion.button>
+                    <Link
+                        to="/products"
+                        state={{ autoVoice: Date.now() }}
+                        className="bg-amber-500 text-slate-900 border-2 border-amber-400 px-4 py-3 rounded-full shadow-lg shadow-amber-500/20 hover:bg-amber-400 hover:shadow-amber-400/40 transition-all flex items-center gap-2 text-sm font-bold uppercase tracking-wide"
+                        title="AI Semantic Search"
+                    >
+                        <Sparkles size={18} className="text-slate-900" />
+                        <span className="hidden sm:inline">Search Product</span>
+                    </Link>
+                </motion.div>
 
                 {/* WhatsApp */}
                 <motion.a
@@ -74,7 +74,6 @@ const FloatingActions = () => {
                     )}
                 </AnimatePresence>
             </div>
-        </>
     );
 };
 

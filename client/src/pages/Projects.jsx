@@ -1,11 +1,13 @@
-
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../utils/api';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Calendar, Tag } from 'lucide-react';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     useEffect(() => {
         fetchProjects();
@@ -78,7 +80,10 @@ const Projects = () => {
 
                                     <div className="pt-6 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
                                         <span>{new Date(project.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
-                                        <button className="font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                                        <button 
+                                            onClick={() => setSelectedProject(project)}
+                                            className="font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                                        >
                                             View Details
                                         </button>
                                     </div>
@@ -96,6 +101,66 @@ const Projects = () => {
                     </div>
                 )}
             </div>
+
+            {/* Project Details Modal */}
+            <AnimatePresence>
+                {selectedProject && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setSelectedProject(null)}
+                            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                        />
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                        >
+                            <button 
+                                onClick={() => setSelectedProject(null)}
+                                className="absolute top-4 right-4 z-10 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                            
+                            <div className="h-64 sm:h-80 relative shrink-0">
+                                <img 
+                                    src={selectedProject.images?.[0] || '/images/hero_conveyor_1773902700148.png'} 
+                                    alt={selectedProject.title} 
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                                <div className="absolute bottom-6 left-6 right-6">
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${selectedProject.status === 'Completed' ? 'bg-green-500 text-white' : 'bg-blue-500 text-white'}`}>
+                                            {selectedProject.status || 'Completed'}
+                                        </span>
+                                        <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wide flex items-center gap-1">
+                                            <Tag size={12} /> {selectedProject.category}
+                                        </span>
+                                    </div>
+                                    <h2 className="text-3xl font-bold text-white leading-tight">{selectedProject.title}</h2>
+                                </div>
+                            </div>
+                            
+                            <div className="p-6 sm:p-8 overflow-y-auto">
+                                <div className="flex items-center gap-2 text-sm text-slate-500 font-semibold mb-6 pb-6 border-b border-slate-100">
+                                    <Calendar size={16} />
+                                    <span>Completed on {new Date(selectedProject.completedAt || selectedProject.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                </div>
+                                
+                                <h3 className="text-lg font-bold text-slate-900 mb-3">Project Overview</h3>
+                                <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                    {selectedProject.description}
+                                </p>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

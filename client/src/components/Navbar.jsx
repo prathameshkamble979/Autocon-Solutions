@@ -9,16 +9,24 @@ const NAV_LINKS = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Projects", path: "/projects" },
-  { name: "Contact", path: "/contact" },
+];
+
+const AI_TOOLS = [
+  { name: "Smart Quote Builder", path: "/quote", desc: "Instant AI-driven price estimates" },
+  { name: "ROI Calculator", path: "/roi", desc: "Calculate payback period & savings" },
+  { name: "Proposal Generator", path: "/proposal", desc: "Draft boardroom-ready proposals" }
 ];
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [mobileProducts, setMobileProducts] = useState(false);
+  const [mobileTools, setMobileTools] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropRef = useRef(null);
+  const toolsRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -31,6 +39,8 @@ const Navbar = () => {
     const fn = (e) => {
       if (dropRef.current && !dropRef.current.contains(e.target))
         setProductsOpen(false);
+      if (toolsRef.current && !toolsRef.current.contains(e.target))
+        setToolsOpen(false);
     };
     document.addEventListener("mousedown", fn);
     return () => document.removeEventListener("mousedown", fn);
@@ -39,12 +49,14 @@ const Navbar = () => {
   useEffect(() => {
     setMenuOpen(false);
     setProductsOpen(false);
+    setToolsOpen(false);
   }, [location]);
 
   const active = (p) => location.pathname === p;
   const prodActive =
     location.pathname.startsWith("/products") ||
     location.pathname.startsWith("/product");
+  const toolsActive = location.pathname === "/quote" || location.pathname === "/roi" || location.pathname === "/proposal";
 
   const linkCls = (path) =>
     `px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
@@ -143,6 +155,67 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
+              {/* AI Tools dropdown */}
+              <div className="relative" ref={toolsRef}>
+                <button
+                  onClick={() => {
+                    setToolsOpen((v) => !v);
+                    setProductsOpen(false);
+                  }}
+                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                    toolsActive
+                      ? "text-amber-500 bg-amber-500/10"
+                      : "text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100"
+                  }`}
+                >
+                  Enterprise Tools
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-200 ${toolsOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                <AnimatePresence>
+                  {toolsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                      transition={{ duration: 0.14 }}
+                      className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50"
+                    >
+                      <div className="p-4 bg-amber-50 border-b border-amber-100">
+                        <p className="text-amber-800 font-black text-sm uppercase tracking-wide">
+                          AI Sales Suite
+                        </p>
+                        <p className="text-amber-700/70 text-xs mt-0.5">
+                          Automate your presales workflow
+                        </p>
+                      </div>
+                      <ul className="py-2">
+                        {AI_TOOLS.map((tool) => (
+                          <li key={tool.path}>
+                            <Link
+                              to={tool.path}
+                              onClick={() => setToolsOpen(false)}
+                              className="flex flex-col px-4 py-2 hover:bg-slate-50 transition-colors group/tool"
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-bold text-[#0F172A] group-hover/tool:text-amber-600 transition-colors">
+                                  {tool.name}
+                                </span>
+                                <ChevronRight size={12} className="text-amber-500 opacity-0 -translate-x-2 group-hover/tool:opacity-100 group-hover/tool:translate-x-0 transition-all" />
+                              </div>
+                              <span className="text-xs text-slate-500 mt-0.5">{tool.desc}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
               {/* Phone */}
               <a
                 href={`tel:${tenant.contact.phone1.replace(/\s/g, "")}`}
@@ -153,22 +226,22 @@ const Navbar = () => {
               </a>
 
               {/* Get a Quote CTA */}
-              <button
-                onClick={() => setModalOpen(true)}
-                className="ml-2 bg-amber-500 hover:bg-amber-400 text-[#0F172A] px-5 py-2.5 rounded-xl font-black text-sm uppercase tracking-wide transition-all duration-200 shadow-md shadow-amber-500/20 hover:shadow-amber-400/30 active:scale-95"
+              <Link
+                to="/quote"
+                className="ml-2 bg-amber-500 hover:bg-amber-400 text-[#0F172A] px-5 py-2.5 rounded-xl font-black text-sm uppercase tracking-wide transition-all duration-200 shadow-md shadow-amber-500/20 hover:shadow-amber-400/30 active:scale-95 flex items-center gap-2"
               >
                 Get a Quote
-              </button>
+              </Link>
             </div>
 
             {/* ── Mobile controls ── */}
             <div className="flex items-center gap-2 md:hidden">
-              <button
-                onClick={() => setModalOpen(true)}
+              <Link
+                to="/quote"
                 className="bg-amber-500 text-[#0F172A] px-4 py-2 rounded-lg text-sm font-black uppercase"
               >
                 Quote
-              </button>
+              </Link>
               <button
                 onClick={() => setMenuOpen((v) => !v)}
                 className="p-2 rounded-lg text-[#64748B] hover:bg-slate-100 transition-colors"
@@ -238,6 +311,39 @@ const Navbar = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                <button
+                  onClick={() => setMobileTools((v) => !v)}
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold ${toolsActive ? "bg-amber-50 text-amber-600" : "text-[#0F172A] hover:bg-slate-50"}`}
+                >
+                  Enterprise Tools
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${mobileTools ? "rotate-180" : ""}`}
+                  />
+                </button>
+                <AnimatePresence>
+                  {mobileTools && (
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: "auto" }}
+                      exit={{ height: 0 }}
+                      className="overflow-hidden ml-4 border-l-2 border-amber-300 pl-4 space-y-1"
+                    >
+                      {AI_TOOLS.map((tool) => (
+                        <Link
+                          key={tool.path}
+                          to={tool.path}
+                          onClick={() => setMenuOpen(false)}
+                          className="block py-2 text-sm font-bold text-[#0F172A] hover:text-amber-600"
+                        >
+                          {tool.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <a
                   href={`tel:${tenant.contact.phone1.replace(/\s/g, "")}`}
                   className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-amber-600"
