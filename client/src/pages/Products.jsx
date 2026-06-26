@@ -278,10 +278,14 @@ const Products = () => {
                                     >
                                         <div className="relative h-52 overflow-hidden bg-slate-200 shrink-0">
                                             <img
-                                                src={product.image || '/placeholder.jpg'}
+                                                src={product.image || '/images/hero_conveyor_1773902700148.png'}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                onError={e => { e.target.onerror = null; e.target.src = '/placeholder.jpg'; }}
+                                                onError={e => { 
+                                                    if (!e.target.src.includes('hero_conveyor_1773902700148.png')) {
+                                                        e.target.src = '/images/hero_conveyor_1773902700148.png'; 
+                                                    }
+                                                }}
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                             <div className="absolute top-0 left-0 right-0 h-1 bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />

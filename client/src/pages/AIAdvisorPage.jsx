@@ -140,7 +140,7 @@ const AIAdvisorPage = () => {
                       <div className="rounded-2xl border border-slate-100 overflow-hidden shadow-sm group">
                         <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative">
                            <img 
-                              src={result.product.image !== 'no-photo.jpg' ? result.product.image : '/placeholder.jpg'} 
+                              src={result.product.image !== 'no-photo.jpg' ? result.product.image : '/images/hero_conveyor_1773902700148.png'} 
                               alt={result.product.name}
                               className="w-full h-full object-cover"
                            />
