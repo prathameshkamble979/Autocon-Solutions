@@ -50,8 +50,12 @@ exports.semanticSearch = async (req, res) => {
         // Map AI result IDs back to full product objects to return to the frontend
         const matchedProductIds = aiResponse.results.map(r => r.productId);
         
+        // Filter out valid ObjectIds to avoid Mongoose CastError on static IDs like 'd4'
+        const mongoose = require('mongoose');
+        const validObjectIds = matchedProductIds.filter(id => mongoose.Types.ObjectId.isValid(id) && String(id).length === 24);
+        
         // Fetch full product details but preserve the AI's ranked order
-        const matchedProducts = await Product.find({ _id: { $in: matchedProductIds } });
+        const matchedProducts = await Product.find({ _id: { $in: validObjectIds } });
         
         // Sort the matched products based on the order returned by the AI
         // Merge with static catalog if the ID is from the static catalog
