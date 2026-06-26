@@ -119,8 +119,8 @@ const Products = () => {
                 }
                 setAiReasoningMap(reasons);
 
-                // Speak back if it was a voice search
-                if (isVoice && 'speechSynthesis' in window) {
+                // Speak back the results
+                if ('speechSynthesis' in window) {
                     window.speechSynthesis.cancel();
                     let utteranceText = res.data.speechSummary || "";
                     if (!utteranceText) {
@@ -244,10 +244,18 @@ const Products = () => {
             <div className="container mx-auto px-4 md:px-8">
                 {/* Info bar */}
                 <div className="flex items-center justify-between mb-8">
-                    <p className="text-slate-600 font-medium flex items-center gap-2">
-                        {aiResults !== null && <span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs font-bold uppercase tracking-wide flex items-center gap-1"><Bot size={12}/> AI Results</span>}
-                        Showing <span className="font-bold text-slate-900">{filtered.length}</span> product types
-                    </p>
+                    <div className="flex items-center gap-3">
+                        {aiResults !== null ? (
+                            <p className="text-slate-800 font-bold text-lg flex items-center gap-2 bg-amber-100/50 px-4 py-2 rounded-xl border border-amber-200">
+                                <Bot size={20} className="text-amber-600" />
+                                Here are the AI search results for your query
+                            </p>
+                        ) : (
+                            <p className="text-slate-600 font-medium">
+                                Showing <span className="font-bold text-slate-900">{filtered.length}</span> product types
+                            </p>
+                        )}
+                    </div>
                     <span className="text-sm text-slate-500">Click a product to view details</span>
                 </div>
 
