@@ -17,6 +17,9 @@ connectDB();
 
 const app = express();
 
+// Trust the reverse proxy (Render/Vercel) so express-rate-limit works correctly
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
