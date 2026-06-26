@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, ArrowRight, ArrowLeft, CheckCircle2, ChevronRight, PackageSearch } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { tenant } from '../config';
 
 const QUESTIONS = [
@@ -55,7 +55,7 @@ const AIAdvisorPage = () => {
       // Submit to AI
       setLoading(true);
       try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ai/advisor/recommend`, answers);
+        const response = await api.post('/ai/advisor/recommend', answers);
         setResult(response.data.recommendation);
       } catch (error) {
         console.error("AI Advisor Error:", error);

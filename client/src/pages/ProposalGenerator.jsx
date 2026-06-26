@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Sparkles, Building2, User, Loader2, Download, CheckCircle2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import { PRODUCTS } from '../config';
 
 const ProposalGenerator = () => {
@@ -13,7 +13,7 @@ const ProposalGenerator = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
+                const res = await api.get('/products');
                 if (res.data.success) {
                     setBackendProducts(res.data.data);
                 }
@@ -64,7 +64,7 @@ const ProposalGenerator = () => {
                 }
             };
 
-            const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/proposals/generate`, payload);
+            const res = await api.post('/proposals/generate', payload);
             
             if (res.data.success) {
                 setResult(res.data);

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Package, Search, Sparkles, Loader2, Bot, Mic, Globe } from 'lucide-react';
 import { PRODUCTS, tenant } from '../config';
-import axios from 'axios';
+import api from '../utils/api';
 
 const LANGUAGES = [
     { code: 'en-US', label: 'English' },
@@ -105,7 +105,7 @@ const Products = () => {
 
         setLoadingAI(true);
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ai/search`, { query, language });
+            const res = await api.post('/ai/search', { query, language });
             if (res.data.success) {
                 // If AI returns empty array, we will just set empty array and it shows "No products found"
                 setAiResults(res.data.results);

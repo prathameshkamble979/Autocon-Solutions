@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PRODUCTS } from '../config';
 import { FileText, Calculator, Sparkles, CheckCircle2, Loader2, Download, RefreshCw } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const QuoteBuilder = () => {
     const [step, setStep] = useState(1);
@@ -14,7 +14,7 @@ const QuoteBuilder = () => {
         // Fetch real products from the backend when component mounts
         const fetchProducts = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
+                const res = await api.get('/products');
                 if (res.data.success) {
                     setBackendProducts(res.data.data);
                 }
@@ -70,7 +70,7 @@ const QuoteBuilder = () => {
                 }
             };
 
-            const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/quotes/generate`, payload);
+            const res = await api.post('/quotes/generate', payload);
             
             if (res.data.success) {
                 setResult(res.data);
